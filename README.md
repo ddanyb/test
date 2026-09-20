@@ -29,9 +29,9 @@ Vercel, S3/CloudFront, or any static host — just upload these files.
 ## Quote form
 
 The "Request a Quote" form validates required fields client-side. On submit
-it currently opens a pre-filled email to
-`dannybacon@abatementsolutionsllc.net` via `mailto:` (see
-`submitQuoteRequest()` in `js/main.js`) since no backend is wired up yet. To
-receive submissions directly (e.g. via a form backend service or a custom
-API endpoint), replace that function's body with a `fetch()` call to the
-chosen endpoint.
+it POSTs to [Web3Forms](https://web3forms.com) via `fetch()` (see
+`submitQuoteRequest()` in `js/main.js`), which emails the submission
+straight to the business inbox with no page redirect. The access key in
+`js/main.js` is a public client-side key (Web3Forms' intended usage, not a
+secret) tied to the receiving email address — to change where submissions
+go, generate a new key at web3forms.com and swap `WEB3FORMS_ACCESS_KEY`.

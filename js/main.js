@@ -116,7 +116,7 @@
         form.reset();
       })
       .catch(function () {
-        status.textContent = 'Something went wrong sending your request. Please call (314) 607-1022 or email us directly.';
+        status.textContent = 'Something went wrong sending your request. Please email us directly at dannybacon@abatementsolutionsllc.net.';
         status.className = 'form-status error';
       })
       .then(function () {
@@ -125,29 +125,37 @@
       });
   });
 
-  /* No backend is wired up yet, so we open a pre-filled email as the delivery
-     mechanism. Swap this for a fetch() call once a form endpoint exists. */
-  function submitQuoteRequest(data) {
-    return new Promise(function (resolve) {
-      var subject = 'Quote Request — ' + data.serviceNeeded + ' (' + data.fullName + ')';
-      var bodyLines = [
-        'Name: ' + data.fullName,
-        'Phone: ' + data.phone,
-        'Email: ' + data.email,
-        'Property Type: ' + data.propertyType,
-        'Service Needed: ' + data.serviceNeeded,
-        'Project Address / City: ' + data.address,
-        'Timeline: ' + (data.timeline || 'Not specified'),
-        '',
-        'Description:',
-        data.description || '(none provided)'
-      ];
-      var mailto = 'mailto:dannybacon@abatementsolutionsllc.net'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+  var WEB3FORMS_ACCESS_KEY = 'edb3de92-f4ad-43ad-bd64-7561a8f76118';
 
-      window.location.href = mailto;
-      resolve();
-    });
+  /* Sends the form to the business inbox via Web3Forms without leaving the page. */
+  function submitQuoteRequest(data) {
+    var payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: 'Quote Request — ' + data.serviceNeeded + ' (' + data.fullName + ')',
+      from_name: data.fullName,
+      name: data.fullName,
+      phone: data.phone,
+      email: data.email,
+      property_type: data.propertyType,
+      service_needed: data.serviceNeeded,
+      project_address: data.address,
+      timeline: data.timeline || 'Not specified',
+      description: data.description || '(none provided)'
+    };
+
+    return fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(function (response) { return response.json(); })
+      .then(function (result) {
+        if (!result.success) {
+          throw new Error(result.message || 'Submission failed');
+        }
+      });
   }
 })();
