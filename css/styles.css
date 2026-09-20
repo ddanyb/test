@@ -113,13 +113,11 @@ img, svg { display: block; max-width: 100%; }
 }
 .topbar__inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding-top: 12px;
   padding-bottom: 6px;
 }
-.topbar__phone { font-weight: 600; color: #fff; }
-.topbar__phone:hover { color: var(--orange); }
 
 /* ---------- Header / Nav ---------- */
 .site-header {
@@ -481,8 +479,6 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); max-width: 640px; }
 .site-footer__nav { display: flex; gap: 22px; }
 .site-footer__nav a { color: #cdd7e2; font-size: .9rem; }
 .site-footer__nav a:hover { color: var(--orange); }
-.site-footer__phone { color: #fff; font-weight: 600; }
-.site-footer__phone:hover { color: var(--orange); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
