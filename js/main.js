@@ -125,25 +125,25 @@
       });
   });
 
-  var WEB3FORMS_ACCESS_KEY = 'edb3de92-f4ad-43ad-bd64-7561a8f76118';
+  var FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/dannybacon@abatementsolutionsllc.net';
 
-  /* Sends the form to the business inbox via Web3Forms without leaving the page. */
+  /* Sends the form to the business inbox via FormSubmit.co without leaving the page. */
   function submitQuoteRequest(data) {
     var payload = {
-      access_key: WEB3FORMS_ACCESS_KEY,
-      subject: 'Quote Request — ' + data.serviceNeeded + ' (' + data.fullName + ')',
-      from_name: data.fullName,
-      name: data.fullName,
-      phone: data.phone,
-      email: data.email,
-      property_type: data.propertyType,
-      service_needed: data.serviceNeeded,
-      project_address: data.address,
-      timeline: data.timeline || 'Not specified',
-      description: data.description || '(none provided)'
+      _subject: 'Quote Request — ' + data.serviceNeeded + ' (' + data.fullName + ')',
+      _template: 'table',
+      _captcha: 'false',
+      Name: data.fullName,
+      Phone: data.phone,
+      Email: data.email,
+      'Property Type': data.propertyType,
+      'Service Needed': data.serviceNeeded,
+      'Project Address or City': data.address,
+      Timeline: data.timeline || 'Not specified',
+      Description: data.description || '(none provided)'
     };
 
-    return fetch('https://api.web3forms.com/submit', {
+    return fetch(FORMSUBMIT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -151,9 +151,12 @@
       },
       body: JSON.stringify(payload)
     })
-      .then(function (response) { return response.json(); })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Submission failed');
+        return response.json();
+      })
       .then(function (result) {
-        if (!result.success) {
+        if (result && (result.success === false || result.success === 'false')) {
           throw new Error(result.message || 'Submission failed');
         }
       });

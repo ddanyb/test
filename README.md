@@ -29,9 +29,14 @@ Vercel, S3/CloudFront, or any static host — just upload these files.
 ## Quote form
 
 The "Request a Quote" form validates required fields client-side. On submit
-it POSTs to [Web3Forms](https://web3forms.com) via `fetch()` (see
+it POSTs to [FormSubmit.co](https://formsubmit.co) via `fetch()` (see
 `submitQuoteRequest()` in `js/main.js`), which emails the submission
-straight to the business inbox with no page redirect. The access key in
-`js/main.js` is a public client-side key (Web3Forms' intended usage, not a
-secret) tied to the receiving email address — to change where submissions
-go, generate a new key at web3forms.com and swap `WEB3FORMS_ACCESS_KEY`.
+straight to `dannybacon@abatementsolutionsllc.net` with no page redirect
+and no account/dashboard setup required.
+
+**One-time activation:** the first submission ever sent to a given email
+address triggers an "Activate Form" confirmation email from FormSubmit
+instead of forwarding that submission's content — click the link in it once
+to activate. Every submission after that goes straight through. To send
+quote requests to a different address, change `FORMSUBMIT_ENDPOINT` in
+`js/main.js` (it will need its own one-time activation too).
