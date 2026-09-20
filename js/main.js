@@ -115,8 +115,13 @@
         status.className = 'form-status success';
         form.reset();
       })
-      .catch(function () {
-        status.textContent = 'Something went wrong sending your request. Please email us directly at dannybacon@abatementsolutionsllc.net.';
+      .catch(function (err) {
+        console.error('Quote form submission failed:', err);
+        if (window.location.protocol === 'file:') {
+          status.textContent = 'This form only sends email when the site is viewed through a real web address (not opened directly as a file). Please email us directly at dannybacon@abatementsolutionsllc.net for now.';
+        } else {
+          status.textContent = 'Something went wrong sending your request. Please email us directly at dannybacon@abatementsolutionsllc.net.';
+        }
         status.className = 'form-status error';
       })
       .then(function () {
