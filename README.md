@@ -10,6 +10,7 @@ metro (Missouri & Illinois).
 - `css/styles.css` — all styling
 - `js/main.js` — mobile nav toggle + quote form validation/submission
 - `assets/` — favicon and other static assets
+- `blog/` — blog section (see below)
 
 ## Running locally
 
@@ -40,3 +41,18 @@ instead of forwarding that submission's content — click the link in it once
 to activate. Every submission after that goes straight through. To send
 quote requests to a different address, change `FORMSUBMIT_ENDPOINT` in
 `js/main.js` (it will need its own one-time activation too).
+
+## Blog
+
+There's no CMS — each post is a plain HTML file in `blog/`, built the same
+way as the rest of the site (same header, footer, and `css/styles.css`).
+
+To add a new post:
+
+1. Copy an existing file in `blog/` (e.g. `blog/popcorn-ceiling-asbestos-signs.html`) as a starting point — it already has the shared header/footer wired up with the correct relative paths (`../` back to the site root).
+2. Update the `<title>`, `<meta name="description">`, and the content inside `<article class="article">`.
+3. Add a matching `<a class="post-card">` entry to `blog/index.html` so the new post shows up in the listing.
+
+Post URLs are just the filename, e.g. `yoursite.com/blog/post-name.html` —
+keep filenames short, lowercase, and hyphenated for clean, readable links
+(this also helps a little with search engines).
